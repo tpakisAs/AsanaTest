@@ -20,6 +20,9 @@ class MainActivityPresenter @Inject constructor() : MainActivityContract.Present
     override fun loadFolder(path: String) {
         folders = emptyList()
         File(path).walk().forEach { folders += it.name }
+        Folder.listOfFiles.clear()
+        Folder.listOfFiles.addAll(folders)
+        Folder.path = path
         view?.loadFolderItems(folders)
     }
 

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">AsanaRebelTest</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">Books Reader</string>
+    <string name="title_activity_main">Books Reader</string>
     <string name="open_folder">Open Folder</string>
     <string name="title">Folders List</string>
 </resources>

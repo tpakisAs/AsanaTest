@@ -1,10 +1,12 @@
 package com.asanarebel.test
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.asanarebel.test.reader.ReaderActivity
 import com.obsez.android.lib.filechooser.ChooserDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -12,7 +14,7 @@ import java.io.File
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), MainActivityContract.View {
+class MainActivity : AppCompatActivity(), MainActivityContract.View, FilesListClickHandler {
 
 
     @Inject
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View {
         setSupportActionBar(toolbar)
         DaggerAppComponent.create().inject(this)
         supportActionBar?.title = getString(R.string.title)
-        presenter.attach(this);
+        presenter.attach(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View {
 
     override fun loadFolderItems(items: List<String>) {
         folders_recycler_view.layoutManager = LinearLayoutManager(this)
-        folders_recycler_view.adapter = FolderListAdapter(items, this)
+        folders_recycler_view.adapter = FolderListAdapter(items, this, this)
     }
 
     override fun openFilePicker() {
@@ -57,5 +59,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View {
             .show()
     }
 
-
+    override fun onClick(file: String) {
+        Folder.selectedFile = file
+        val intent = Intent(this, ReaderActivity::class.java)
+        startActivity(intent)
+    }
 }
